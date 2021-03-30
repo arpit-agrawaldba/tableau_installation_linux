@@ -67,6 +67,7 @@
       - numactl-devel.x86_64
       - unzip.x86_64
       - zip.x86_64
+      - lvm2.x86_64
     update_cache: yes
     state: present
 
@@ -108,3 +109,35 @@
     dest: /etc/security/limits.d/29-tableau.conf
     mode: 0644
 
+
+- name: Create the physical volume for tableau software
+  lvg:
+    vg: tableau_vg
+    pvs: "/dev/xvdf"
+    state: present
+
+- name: Create the logical volume from physical volume 
+  lvol:
+    vg: tableau_vg
+    lv: tableaubinlv
+    size: 19G
+
+- name: Create XFS Filesystem on logical volumes
+  filesystem:
+    dev: "/dev/mapper/tableau_vg-tableaubinlv"
+    fstype: xfs
+
+- name: Mount the XFS filesystem on logical volume
+  mount:
+    src: "/dev/mapper/tableau_vg-tableaubinlv"
+    name: /tableau
+    fstype: xfs
+    state: mounted
+
+- name: Change the permissions and ownership of directories to tableau user
+  file:
+    state: directory
+    path: /tableau
+    owner: tableau
+    group: tableau
+    mode: 0770
