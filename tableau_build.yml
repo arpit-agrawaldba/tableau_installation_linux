@@ -12,7 +12,7 @@
   roles:
     - role: tableau_os_build
 
-#   - role: tableau_install
+    - role: tableau_install
 
 #   - role: tableau_tsm_init
 

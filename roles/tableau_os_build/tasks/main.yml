@@ -141,3 +141,9 @@
     owner: tableau
     group: tableau
     mode: 0770
+
+- name: Create sudo rules for tableau user used while installation and other purposes
+  template:
+    src: tableau_sudoers.j2
+    dest: /etc/sudoers.d/tableau
+    mode: 440

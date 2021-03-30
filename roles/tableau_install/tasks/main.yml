@@ -1,0 +1,10 @@
+#- name: Download the Tableau Software from Bitbucket
+
+
+- name: Install Tableau Server Binaries
+  shell: sudo rpm -i --prefix /tableau /tmp/tableau-server-2020-3-3.x86_64.rpm
+  args:
+     creates: /tableau/packages
+  become: yes
+  become_user : tableau
+  become_method: sudo
