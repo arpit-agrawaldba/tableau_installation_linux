@@ -39,7 +39,6 @@
       - fuse-libs.x86_64
       - fuse-libs.i686
       - gdb.x86_64
-#      - gdb.i686
       - krb5-libs.x86_64
       - krb5-libs.i686
       - libXcomposite.x86_64
@@ -70,3 +69,42 @@
       - zip.x86_64
     update_cache: yes
     state: present
+
+- name: Create tableau OS user group on the server
+  group:
+    name: tableau
+    state: present
+    gid: 10001
+
+- name: Create tsmadmin OS user group on the server
+  group:
+    name: tsmadmin 
+    state: present
+    gid: 10002
+ 
+- name: Create tableau OS user on the server
+  user:
+    name: tableau
+    comment: os user for tableau server binaries
+    uid: 20001
+    group: tableau
+    groups: tableau,tsmadmin
+    createhome: no
+    state: present
+    home: /opt/tableau 
+    shell: /bin/ksh 
+
+- name: Create home directory for tableau user
+  file:
+    path: /opt/tableau
+    state: directory
+    owner: tableau
+    group: tableau
+    mode: 0750
+
+- name: Apply the user shell limits for operating system user tableau
+  copy:
+    src: tableau_limits.conf
+    dest: /etc/security/limits.d/29-tableau.conf
+    mode: 0644
+
