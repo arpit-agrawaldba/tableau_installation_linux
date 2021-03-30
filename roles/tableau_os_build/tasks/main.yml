@@ -1,0 +1,72 @@
+
+
+
+- name: Create directory tableau for tuned profile for user tableau
+  file:
+    path: /etc/tuned/tableau
+    state: directory
+    mode: 744
+    owner: root
+    group: root
+    force: no
+
+- name: Deploy the tuned profile for tableau build from template
+  template:
+    dest: /etc/tuned/tableau/tuned.conf
+    src: tuned.conf.j2
+    mode: 0644
+    owner: root
+    group: root
+    force: no
+
+- name: Activate the tableau tuned profile
+  command: tuned-adm profile tableau
+
+
+- name: Install dependent OS packages for Tableau Server Installation
+  yum:
+    name:
+      - bash.x86_64
+      - bash-completion.noarch
+      - chrpath.x86_64
+      - fontconfig.x86_64
+      - fontconfig.i686
+      - freeglut.x86_64
+      - freeglut.i686
+      - freetype.x86_64
+      - freetype.i686
+      - fuse.x86_64
+      - fuse-libs.x86_64
+      - fuse-libs.i686
+      - gdb.x86_64
+#      - gdb.i686
+      - krb5-libs.x86_64
+      - krb5-libs.i686
+      - libXcomposite.x86_64
+      - libXcomposite.i686
+      - libXcursor.x86_64
+      - libXcursor.i686
+      - libXi.x86_64
+      - libXi.i686
+      - libXrandr.x86_64
+      - libXrandr.i686
+      - libXrender.x86_64
+      - libXrender.i686
+      - libXtst.x86_64
+      - libXtst.i686
+      - libxslt.x86_64
+      - libxslt.i686
+      - mesa-libEGL.x86_64
+      - mesa-libEGL.i686
+      - net-tools.x86_64
+      - redhat-lsb-core.x86_64
+      - redhat-lsb-core.i686
+      - iotop
+      - ksh.x86_64
+      - sysstat.x86_64
+      - numactl.x86_64
+      - numactl-devel.x86_64
+      - unzip.x86_64
+      - zip.x86_64
+    update_cache: yes
+    state: present
