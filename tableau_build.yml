@@ -1,0 +1,27 @@
+#######################################################################
+#######################################################################
+################## Playbook to Build Tableau Server ###################
+#######################################################################
+#######################################################################
+
+- hosts: "{{ TABLEAU_HOSTS }}"
+
+  pre_tasks:
+
+
+  roles:
+    - role: tableau_os_build
+
+#   - role: tableau_install
+
+#   - role: tableau_tsm_init
+
+#   - role: tablea_activate
+
+#   - role: tableau_register
+
+#   - role: tableau_config_init
+
+#   - role: tableau_post_config
+
+
