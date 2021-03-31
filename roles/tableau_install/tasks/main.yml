@@ -6,7 +6,7 @@
 
 - name: Check whether Tableau Server software already downloaded on the server
   stat:
-    path: "{{ tableau_software_dir }}"/{{ tableau_software_rpm }}
+    path: "{{ tableau_software_dir }}/{{ tableau_software_rpm }}"
   register: tableau_software 
 
 - name: Report if Tableau Server software already exits on the server
@@ -16,18 +16,18 @@
   
 - name: Download the Tableau Software from AWS S3 bucket
   aws_s3:
-    aws_access_key: {{ aws_access_key }} 
-    aws_secret_key: {{ aws_secret_key }} 
-    bucket: {{ aws_bucket }}
-    object: {{ tableau_software_rpm }} 
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}" 
+    bucket: "{{ aws_bucket }}"
+    object: "{{ tableau_software_rpm }}" 
     mode: get
-    dest: "{{ tableau_software_dir }}"/{{ tableau_software_rpm }}
+    dest: "{{ tableau_software_dir }}/{{ tableau_software_rpm }}"
   when: not tableau_software.stat.exists     
 
 - name: Install Tableau Server Binaries
-  shell: sudo rpm -i --prefix {{ tableau_prefix_dir }} "{{ tableau_software_dir }}"/{{ tableau_software_rpm }}
+  shell: sudo rpm -i --prefix {{ tableau_prefix_dir }} "{{ tableau_software_dir }}/{{ tableau_software_rpm }}"
   args:
-     creates: "{{ tableau_prefix_dir }}"/packages
+     creates: "{{ tableau_prefix_dir }}/packages"
   become: yes
   become_user : "{{ tableau_owner }}"
   become_method: sudo

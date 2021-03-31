@@ -86,7 +86,7 @@
     comment: os user for tableau server binaries
     uid: "{{ tableau_owner_id }}"
     group: "{{ tableau_primary_group }}"
-    groups: "{{ tableau_primary_group }}","{{ tableau_secondary_group }}"
+    groups: "{{  tableau_primary_group }},{{ tableau_secondary_group }}"
     createhome: no
     state: present
     home: "{{ tableau_owner_homedir }}"
