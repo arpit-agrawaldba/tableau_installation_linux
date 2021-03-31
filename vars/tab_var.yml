@@ -17,6 +17,6 @@
 
 "tableau_software_dir": "/tmp"
 "tableau_software_rpm": "tableau-server-2020-3-3.x86_64.rpm"
-"aws_access_key": ""
+"aws_access_key": "test"
 "aws_secret_key": ""
 "aws_bucket": ""
