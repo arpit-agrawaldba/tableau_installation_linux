@@ -1,9 +1,6 @@
-
-
-
-- name: Create directory tableau for tuned profile for user tableau
+- name: Create directory /etc/tuned/{{ tableau_owner }} for tuned profile for user {{ tableau_owner }} 
   file:
-    path: /etc/tuned/tableau
+    path: /etc/tuned/{{ tableau_owner }}
     state: directory
     mode: 744
     owner: root
@@ -12,15 +9,15 @@
 
 - name: Deploy the tuned profile for tableau build from template
   template:
-    dest: /etc/tuned/tableau/tuned.conf
+    dest: /etc/tuned/{{ tableau_owner }}/tuned.conf
     src: tuned.conf.j2
     mode: 0644
     owner: root
     group: root
     force: no
 
-- name: Activate the tableau tuned profile
-  command: tuned-adm profile tableau
+- name: Activate the {{ tableau_owner }} tuned profile
+  command: tuned-adm profile {{ tableau_owner }} 
 
 
 - name: Install dependent OS packages for Tableau Server Installation
@@ -71,79 +68,78 @@
     update_cache: yes
     state: present
 
-- name: Create tableau OS user group on the server
+- name: Create {{ tableau_primary_group }} OS user group on the server
   group:
-    name: tableau
+    name: "{{ tableau_primary_group }}" 
     state: present
-    gid: 10001
+    gid: "{{ tableau_primary_group_id }}" 
 
-- name: Create tsmadmin OS user group on the server
+- name: Create {{ tableau_secondary_group }} OS user group on the server
   group:
-    name: tsmadmin 
+    name: "{{ tableau_secondary_group }}" 
     state: present
-    gid: 10002
+    gid: "{{ tableau_secondary_group_id }}"
  
-- name: Create tableau OS user on the server
+- name: Create {{tableau_owner }} OS user on the server
   user:
-    name: tableau
+    name: "{{ tableau_owner }}"
     comment: os user for tableau server binaries
-    uid: 20001
-    group: tableau
-    groups: tableau,tsmadmin
+    uid: "{{ tableau_owner_id }}"
+    group: "{{ tableau_primary_group }}"
+    groups: "{{ tableau_primary_group }}","{{ tableau_secondary_group }}"
     createhome: no
     state: present
-    home: /opt/tableau 
-    shell: /bin/ksh 
+    home: "{{ tableau_owner_homedir }}"
+    shell: "{{ tableau_owner_shell }}" 
 
-- name: Create home directory for tableau user
+- name: Create home directory {{ tableau_owner_homedir }} for {{ tableau_owner }} user
   file:
-    path: /opt/tableau
+    path: "{{ tableau_owner_homedir }}" 
     state: directory
-    owner: tableau
-    group: tableau
+    owner: "{{ tableau_owner }}"
+    group: "{{ tableau_primary_group }}"
     mode: 0750
 
-- name: Apply the user shell limits for operating system user tableau
-  copy:
-    src: tableau_limits.conf
-    dest: /etc/security/limits.d/29-tableau.conf
+- name: Apply the user shell limits for operating system user {{ tableau_owner }} 
+  template:
+    src: limits.conf.j2
+    dest: /etc/security/limits.d/29-{{ tableau_owner }}.conf
     mode: 0644
-
 
 - name: Create the physical volume for tableau software
   lvg:
-    vg: tableau_vg
-    pvs: "/dev/xvdf"
+    vg: "{{ tableau_volume_group }}"
+    pvs: "{{ tableau_software_disk }}"
     state: present
 
 - name: Create the logical volume from physical volume 
   lvol:
-    vg: tableau_vg
-    lv: tableaubinlv
-    size: 19G
+    vg: "{{ tableau_volume_group }}"
+    lv: "{{ tableau_logical_volume }}"
+    size: "{{ tableau_logical_vol_size_ingb }}"
 
-- name: Create XFS Filesystem on logical volumes
+- name: Create {{ tableau_logical_vol_filesystem }} Filesystem on logical volumes
   filesystem:
-    dev: "/dev/mapper/tableau_vg-tableaubinlv"
-    fstype: xfs
+    dev: "/dev/mapper/{{ tableau_volume_group }}-{{ tableau_logical_volume }}"
+    fstype: "{{ tableau_logical_vol_filesystem }}" 
 
-- name: Mount the XFS filesystem on logical volume
+- name: Mount the {{ tableau_logical_vol_filesystem }} filesystem on logical volume
   mount:
-    src: "/dev/mapper/tableau_vg-tableaubinlv"
-    name: /tableau
-    fstype: xfs
+    src: "/dev/mapper/{{ tableau_volume_group }}-{{ tableau_logical_volume }}"
+    name: "{{ tableau_prefix_dir }}" 
+    fstype: "{{ tableau_logical_vol_filesystem }}"
     state: mounted
 
-- name: Change the permissions and ownership of directories to tableau user
+- name: Change the permissions and ownership of directories to {{ tableau_owner }} user
   file:
     state: directory
-    path: /tableau
-    owner: tableau
-    group: tableau
+    path: "{{ tableau_prefix_dir }}"
+    owner: "{{ tableau_owner }}"
+    group: "{{ tableau_primary_group }}"
     mode: 0770
 
-- name: Create sudo rules for tableau user used while installation and other purposes
+- name: Create sudo rules for {{ tableau_owner }} user used while installation and other purposes
   template:
-    src: tableau_sudoers.j2
-    dest: /etc/sudoers.d/tableau
+    src: sudoers.j2
+    dest: /etc/sudoers.d/{{ tableau_owner }}
     mode: 440

@@ -1,10 +1,33 @@
-#- name: Download the Tableau Software from Bitbucket
+- name: Intall boto3 and botocore for AWS S3 Ansible module
+  pip:
+    name:
+      - boto3
+      - botocore
 
+- name: Check whether Tableau Server software already downloaded on the server
+  stat:
+    path: "{{ tableau_software_dir }}"/{{ tableau_software_rpm }}
+  register: tableau_software 
+
+- name: Report if Tableau Server software already exits on the server
+  debug:
+    msg: Tableau Server software already exits on the server
+  when: tableau_software.stat.exists
+  
+- name: Download the Tableau Software from AWS S3 bucket
+  aws_s3:
+    aws_access_key: {{ aws_access_key }} 
+    aws_secret_key: {{ aws_secret_key }} 
+    bucket: {{ aws_bucket }}
+    object: {{ tableau_software_rpm }} 
+    mode: get
+    dest: "{{ tableau_software_dir }}"/{{ tableau_software_rpm }}
+  when: not tableau_software.stat.exists     
 
 - name: Install Tableau Server Binaries
-  shell: sudo rpm -i --prefix /tableau /tmp/tableau-server-2020-3-3.x86_64.rpm
+  shell: sudo rpm -i --prefix {{ tableau_prefix_dir }} "{{ tableau_software_dir }}"/{{ tableau_software_rpm }}
   args:
-     creates: /tableau/packages
+     creates: "{{ tableau_prefix_dir }}"/packages
   become: yes
-  become_user : tableau
+  become_user : "{{ tableau_owner }}"
   become_method: sudo
