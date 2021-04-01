@@ -1,0 +1,17 @@
+- name: Find the version of RPM installed for TSM steps
+  shell: 'rpm -qa | grep tableau-server'
+  register: tab_rpm
+
+- name: Activate the tableau server with trail license
+  shell: |
+    {{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm login -u {{ temp_os_user }} -p {{ temp_os_user_passwd }}
+    {{ tableau_prefix_dir }}/packages/scripts.{{ tab_rpm.stdout.split('-')[2] }}/initialize-tsm --accepteula -d {{ tableau_prefix_dir }}
+  become: yes
+  become_user: "{{ tableau_owner }}"
+  become_method: sudo
+  register: activate_output
+
+ - name: Validate whether activation has been succesfull.
+   fail:
+     msg: Trail License Activation failure.
+   when: activate_output.stdout is search('error') == true

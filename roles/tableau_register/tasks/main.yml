@@ -1,0 +1,24 @@
+- name: Find the version of RPM installed for TSM steps
+  shell: 'rpm -qa | grep tableau-server'
+  register: tab_rpm
+
+- name: Generate the registeration json file for tableau
+  template:
+    dest: "{{ tableau_temp_dir }}"
+    src: registeration.json
+    owner: "{{ tableau_owner }}"
+    group: "{{ tableau_primary_group }}"
+    mode: 440
+
+- name: Activate the tableau server with trail license
+  shell: {{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm register --file {{ tableau_temp_dir }}/registeration.json 
+  become: yes
+  become_user: "{{ tableau_owner }}"
+  become_method: sudo
+  register: reg_output
+
+- name: Validate registeration has been successfull.
+  fail:
+    msg: Registeration for Tableau Server Failed.
+  when: reg_output.stdout is search('Registeration complete') == false
+

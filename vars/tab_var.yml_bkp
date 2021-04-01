@@ -1,0 +1,22 @@
+"tableau_owner": "tableau"
+"tableau_primary_group": "tableau"
+"tableau_secondary_group": "tsmadmin"
+
+"tableau_primary_group_id": "10001"
+"tableau_secondary_group_id": "10002"
+"tableau_owner_id": "20001"
+"tableau_owner_homedir": "/opt/tableau"
+"tableau_owner_shell": "/bin/ksh"
+
+"tableau_volume_group": "tableau_vg"
+"tableau_software_disk": "/dev/xvdf"
+"tableau_logical_volume": "tableaubinlv"
+"tableau_logical_vol_size_ingb": "19G"
+"tableau_logical_vol_filesystem": "xfs"
+"tableau_prefix_dir": "/tableau"
+
+"tableau_software_dir": "/tmp"
+"tableau_software_rpm": "tableau-server-2020-3-3.x86_64.rpm"
+"aws_access_key": "test"
+"aws_secret_key": ""
+"aws_bucket": ""

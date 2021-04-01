@@ -1,0 +1,36 @@
+- name: Find the version of RPM installed for TSM steps
+  shell: 'rpm -qa | grep tableau-server'
+  register: tab_rpm
+
+- name: Generate the Tableau configuration file for tableau
+  template:
+    dest: "{{ tableau_temp_dir }}"
+    src: config_local.json
+    owner: "{{ tableau_owner }}"
+    group: "{{ tableau_primary_group }}"
+    mode: 440
+
+- name: Configure Intial Node Setting for the tableau server 
+  shell: {{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm settings import -f {{ tableau_temp_dir }}/config_local.json 
+  become: yes
+  become_user: "{{ tableau_owner }}"
+  become_method: sudo
+  register: config_output
+
+- name: Validate configuration has been successfull.
+  fail:
+    msg: Configuration for Tableau Server Failed.
+  when: config_output.stdout is search('Successfully deployed') == false
+
+- name: Initialize and start Tableau Services
+  shell: {{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm initialize --start-server --request-timeout {{ tsm_timeout }}
+  become: yes
+  become_user: "{{ tableau_owner }}"
+  become_method: sudo
+  register: init_output
+
+- name: Validate Initialize and start Tableau Services has been successfull.
+  fail:
+    msg: Initialize and start Tableau Services Failed.
+  when: init_output.stdout is search('successfully') == false
+

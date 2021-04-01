@@ -1,0 +1,66 @@
+- name: Find the version of RPM installed for TSM steps
+  shell: 'rpm -qa | grep tableau-server'
+  register: tab_rpm
+  
+
+- name: Configure the admin account for Tableau Server 
+  shell: "{{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tabcmd initialuser --server localhost:{{ gateway_port }} --username {{ tableau_admin_acct }} --password {{ tableau_admin_acct_passwd }} --no-certcheck"
+  become: yes
+  become_user: "{{ tableau_owner }}"
+  become_method: sudo
+  register: admin_output
+  
+
+- name: Validate admin account configuration has been successfull.
+  fail:
+    msg: Configuration for admin account Failed.
+  when: admin_output.stdout is search('Succeeded') == false
+  
+
+- name: Check whether PostreSQL Driver software already downloaded on the server
+  stat:
+    path: "{{ tableau_software_dir }}/{{ postgresql_driver_rpm }}"
+  register: postgresql_software
+
+- name: Report if PostreSQL Driver software already exits on the server
+  debug:
+    msg: PostreSQL Driver software already exits on the server
+  when: postgresql_software.stat.exists
+
+
+- name: Download the PostreSQL Driver Software from AWS S3 bucket
+  aws_s3:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    bucket: "{{ aws_bucket }}"
+    object: "{{ postgresql_driver_rpm }}"
+    mode: get
+    dest: "{{ tableau_software_dir }}/{{ postgresql_driver_rpm }}"
+  when: not postgresql_software.stat.exists
+
+- name: Install PostgreSQL Driver on Tableau Server
+  shell: rpm -i {{ tableau_software_dir }}/{{ postgresql_driver_rpm }}
+  
+
+- name: Check whether Oracle Driver software already downloaded on the server
+  stat:
+    path: "{{ tableau_software_dir }}/{{ oracle_driver_rpm }}"
+  register: oracle_software
+
+- name: Report if Oracle Driver software already exits on the server
+  debug:
+    msg: Oracle Driver software already exits on the server
+  when: oracle_software.stat.exists
+
+- name: Download the Oracle Driver Software from AWS S3 bucket
+  aws_s3:
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    bucket: "{{ aws_bucket }}"
+    object: "{{ oracle_driver_rpm }}"
+    mode: get
+    dest: "{{ tableau_software_dir }}/{{ oracle_driver_rpm }}"
+  when: not oracle_software.stat.exists
+
+- name: Install Oracle Driver on Tableau Server
+  shell: rpm -i {{ tableau_software_dir }}/{{ oracle_driver_rpm }}

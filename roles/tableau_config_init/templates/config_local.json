@@ -1,0 +1,19 @@
+{
+   "configEntities": {
+      "gatewaySettings": {
+         "_type": "gatewaySettingsType",
+         "port": "{{ gateway_port }},
+         "publicHost": "{{ gateway_publichost }}",
+         "publicPort": "{{ gateway_publicport }}"
+      },
+      "identityStore": {
+         "_type": "identityStoreType",
+         "type": "{{ identitystore_type }}",
+         "domain": "{{ identitystore_domain }}",
+         "nickname": "{{ identitystore_nickname }}"
+      }
+    },
+     "configKeys": {
+        "gateway.timeout": "{{ gateway_timeout }}"
+     }
+}

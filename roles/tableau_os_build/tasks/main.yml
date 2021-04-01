@@ -16,10 +16,14 @@
     group: root
     force: no
 
-- name: Activate the {{ tableau_owner }} tuned profile
-  command: tuned-adm profile {{ tableau_owner }} 
+- name: Check if "{{ tableau_owner }}" tuned profile active
+  command: tuned-adm active
+  register: tunedprofile
 
-
+- name: Activate the "{{ tableau_owner }}" tuned profile
+  command: tuned-adm profile tableau 
+  when: tunedprofile.stdout is search('tableau') == false
+  
 - name: Install dependent OS packages for Tableau Server Installation
   yum:
     name:
@@ -65,6 +69,7 @@
       - unzip.x86_64
       - zip.x86_64
       - lvm2.x86_64
+      - unixODBC.x86_64
     update_cache: yes
     state: present
 
