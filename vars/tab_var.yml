@@ -44,8 +44,8 @@
 "gateway_publicport": "80"
 "gateway_timeout": "900"
 "identitystore_type": "local"
-"identitystore_domain": "example.lan"
-"identitystore_nickname": "EXAMPLE"
+
+"tsm_timeout": "3600"
 
 "tableau_admin_acct": "admin"
 "tableau_admin_acct_passwd": "Kasdfla98707"

@@ -3,7 +3,7 @@
   register: tab_rpm
 
 - name: Activate the tableau server with trail license
-  shell: "{{ tableau_prefix_dir }}/packages/scripts.{{ tab_rpm.stdout.split('-')[2] }}/tsm licenses activate -t"
+  shell: "{{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm licenses activate -t"
   become: yes
   become_user: "{{ tableau_owner }}"
   become_method: sudo

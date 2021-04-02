@@ -15,7 +15,14 @@
   become: yes
   become_user: "{{ tableau_owner }}"
   become_method: sudo
+
+- name: Apply the pending changes for Configuration and Intial Node Setting
+  shell: "{{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm pending-changes apply --ignore-prompt" 
+  become: yes
+  become_user: "{{ tableau_owner }}"
+  become_method: sudo
   register: config_output
+
 
 - name: Validate configuration has been successfull.
   fail:
