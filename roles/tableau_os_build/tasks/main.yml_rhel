@@ -59,8 +59,8 @@
       - mesa-libEGL.x86_64
       - mesa-libEGL.i686
       - net-tools.x86_64
-      - system-lsb-core.x86_64
-      - system-lsb-core.i686
+      - redhat-lsb-core.x86_64
+      - redhat-lsb-core.i686
       - iotop
       - ksh.x86_64
       - sysstat.x86_64
