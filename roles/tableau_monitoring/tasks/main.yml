@@ -1,0 +1,26 @@
+- name: Find the version of RPM installed for TSM steps
+  shell: 'rpm -qa | grep tableau-server'
+  register: tab_rpm
+
+- name: Generate the Tableau monitoring file for tableau
+  template:
+    dest: "{{ tableau_temp_dir }}"
+    src: monitoring.json
+    owner: "{{ tableau_owner }}"
+    group: "{{ tableau_primary_group }}"
+    mode: 440
+
+- name: Setup Tableau Monitoring 
+  shell: |
+  	{{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm settings import -f {{ tableau_temp_dir }}/monitroing.json 
+        {{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm pending-changes apply --ignore-prompt
+  become: yes
+  become_user: "{{ tableau_owner }}"
+  become_method: sudo
+  register: mon_output
+
+- name: Validate monitoring setup has been completed.
+  fail:
+    msg: Setup Monitoring for Tableau Server Failed.
+  when: mon_output.stdout is search('Successfully deployed') == false
+
