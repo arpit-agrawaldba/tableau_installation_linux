@@ -11,7 +11,7 @@
     mode: 440
 
 - name: Activate the tableau server with trail license
-  shell: {{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm register --file {{ tableau_temp_dir }}/registeration.json 
+  shell: "{{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm register --file {{ tableau_temp_dir }}/registeration.json" 
   become: yes
   become_user: "{{ tableau_owner }}"
   become_method: sudo

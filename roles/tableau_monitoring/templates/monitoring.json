@@ -1,0 +1,17 @@
+{
+"ConfigKeys": {
+"svcmonitor.notification.smtp.server": "{{ smtp_server }}",
+"svcmonitor.notification.smtp.target_addresses": "{{ smtp_target_addresses }}",
+"svcmonitor.notification.smtp.canonical_url": "{{ smtp_canonical_url }}",
+"svcmonitor.notification.smtp.enabled": "{{ smtp_enabled }}",
+"svcmonitor.notification.smtp.from_address": "{{ smtp_from_address }}",
+"backgrounder.notification.enabled": "{{ backgrounder_enabled }}",
+"subscriptions_enabled": "{{ subscriptions_enabled }}",
+"storage.monitoring.email_enabled": "{{ storage_email_enabled }}",
+"storage.monitoring.warning_percent": "{{ storage_warning_percent }}",
+"storage.monitoring.critical_percent": "{{ storage_critical_percent }}",
+"storage.monitoring.email_interval_min": "{{ storage_email_interval_min }}",
+"storage.monitoring.record_history_enabled": "{{ storage_record_history_enabled }}",
+"features.DesktopReporting": ""
+             }
+}

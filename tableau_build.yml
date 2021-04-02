@@ -17,12 +17,14 @@
 
 #    - role: tableau_tsm_init
 
-#   - role: tablea_activate
+#    - role: tablea_activate
 
-#   - role: tableau_register
+#    - role: tableau_register
 
-#   - role: tableau_config_init
+#    - role: tableau_config_init
 
-   - role: tableau_post_config
+#    - role: tableau_post_config
+    
+    - role: tableau_monitoring
 
 

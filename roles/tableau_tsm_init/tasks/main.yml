@@ -12,8 +12,6 @@
 
 - name: Initialize TSM for tableau server
   shell: sudo  {{ tableau_prefix_dir }}/packages/scripts.{{ tab_rpm.stdout.split('-')[2] }}/initialize-tsm --accepteula -d {{ tableau_prefix_dir }}
-  args:
-    creates: "{{ tableau_prefix_dir }}/packages"
   become: yes
   become_user: "{{ tableau_owner }}"
   become_method: sudo

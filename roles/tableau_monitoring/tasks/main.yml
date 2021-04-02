@@ -12,8 +12,8 @@
 
 - name: Setup Tableau Monitoring 
   shell: |
-  	{{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm settings import -f {{ tableau_temp_dir }}/monitroing.json 
-        {{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm pending-changes apply --ignore-prompt
+    {{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm settings import -f {{ tableau_temp_dir }}/monitroing.json 
+    {{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm pending-changes apply --ignore-prompt
   become: yes
   become_user: "{{ tableau_owner }}"
   become_method: sudo

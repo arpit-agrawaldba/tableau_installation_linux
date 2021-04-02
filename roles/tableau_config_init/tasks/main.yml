@@ -11,7 +11,7 @@
     mode: 440
 
 - name: Configure Intial Node Setting for the tableau server 
-  shell: {{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm settings import -f {{ tableau_temp_dir }}/config_local.json 
+  shell: "{{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm settings import -f {{ tableau_temp_dir }}/config_local.json" 
   become: yes
   become_user: "{{ tableau_owner }}"
   become_method: sudo
@@ -23,7 +23,7 @@
   when: config_output.stdout is search('Successfully deployed') == false
 
 - name: Initialize and start Tableau Services
-  shell: {{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm initialize --start-server --request-timeout {{ tsm_timeout }}
+  shell: "{{ tableau_prefix_dir }}/packages/customer-bin.{{ tab_rpm.stdout.split('-')[2] }}/tsm initialize --start-server --request-timeout {{ tsm_timeout }}"
   become: yes
   become_user: "{{ tableau_owner }}"
   become_method: sudo

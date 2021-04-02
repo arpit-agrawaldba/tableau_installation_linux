@@ -11,7 +11,7 @@
   become_method: sudo
   register: activate_output
 
- - name: Validate whether activation has been succesfull.
-   fail:
-     msg: Trail License Activation failure.
-   when: activate_output.stdout is search('error') == true
+- name: Validate whether activation has been succesfull.
+  fail:
+    msg: Trail License Activation failure.
+  when: activate_output.stdout is search('error') == true
