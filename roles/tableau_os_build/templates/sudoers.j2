@@ -1,4 +1,9 @@
 ### Sudoers file for tableau server
 
 {{tableau_owner}} {{ ansible_hostname }}=(root) NOPASSWD: /usr/bin/rpm -i --prefix {{ tableau_prefix_dir }} {{ tableau_software_dir }}/tableau-server-????-?-?.x86_64.rpm, \
-{{ tableau_prefix_dir }}/packages/scripts.?????.??.????.????/initialize-tsm --accepteula -d {{ tableau_prefix_dir }}
+{{ tableau_prefix_dir }}/packages/scripts.?????.??.????.????/initialize-tsm --accepteula -d {{ tableau_prefix_dir }}, \
+/usr/bin/systemctl status user@*.service, \
+/usr/bin/systemctl stop user@*.service, \
+/usr/bin/systemctl start user@*.service, \
+/usr/bin/systemctl enable user@*.service, \
+/usr/bin/systemctl disable user@*.service
