@@ -1,29 +1,3 @@
-- name: Create directory /etc/tuned/{{ tableau_owner }} for tuned profile for user {{ tableau_owner }} 
-  file:
-    path: /etc/tuned/{{ tableau_owner }}
-    state: directory
-    mode: 744
-    owner: root
-    group: root
-    force: no
-
-- name: Deploy the tuned profile for tableau build from template
-  template:
-    dest: /etc/tuned/{{ tableau_owner }}/tuned.conf
-    src: tuned.conf.j2
-    mode: 0644
-    owner: root
-    group: root
-    force: no
-
-- name: Check if "{{ tableau_owner }}" tuned profile active
-  command: tuned-adm active
-  register: tunedprofile
-
-- name: Activate the "{{ tableau_owner }}" tuned profile
-  command: tuned-adm profile tableau 
-  when: tunedprofile.stdout is search('tableau') == false
-  
 - name: Install dependent OS packages for Tableau Server Installation
   yum:
     name:
@@ -70,8 +44,41 @@
       - zip.x86_64
       - lvm2.x86_64
       - unixODBC.x86_64
+      - tuned
     update_cache: yes
     state: present
+
+- name: Make sure tuned daemon is running
+  systemd: 
+    name: tuned 
+    state: started
+
+- name: Create directory /etc/tuned/{{ tableau_owner }} for tuned profile for user {{ tableau_owner }}
+  file:
+    path: /etc/tuned/{{ tableau_owner }}
+    state: directory
+    mode: 744
+    owner: root
+    group: root
+    force: no
+
+- name: Deploy the tuned profile for tableau build from template
+  template:
+    dest: /etc/tuned/{{ tableau_owner }}/tuned.conf
+    src: tuned.conf.j2
+    mode: 0644
+    owner: root
+    group: root
+    force: no
+
+- name: Check if "{{ tableau_owner }}" tuned profile active
+  command: tuned-adm active
+  register: tunedprofile
+
+- name: Activate the "{{ tableau_owner }}" tuned profile
+  command: tuned-adm profile tableau
+  when: tunedprofile.stdout is search('tableau') == false
+
 
 - name: Create {{ tableau_primary_group }} OS user group on the server
   group:

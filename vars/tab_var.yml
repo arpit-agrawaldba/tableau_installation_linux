@@ -20,7 +20,7 @@
 "tableau_volume_group": "tableau_vg"
 "tableau_software_disk": "/dev/xvdf"
 "tableau_logical_volume": "tableaubinlv"
-"tableau_logical_vol_size_ingb": "15G"
+"tableau_logical_vol_size_ingb": "45G"
 "tableau_logical_vol_filesystem": "xfs"
 "tableau_prefix_dir": "/tableau"
 
