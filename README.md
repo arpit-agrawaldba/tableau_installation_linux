@@ -1,18 +1,19 @@
 <!-- Add banner here -->
 ![Banner](https://github.com/arpit-agrawaldba/tableau_installation_linux/blob/main/header.png)
 
-# Tableau Server Installation - Linux
+# Project Title
 
 <!-- Describe your project in brief -->
+## Tableau Server Installation - Linux
 
 The project provides you an automated method using ansible to install a standalone Tableau Server on Linux.
 It uses ansible to orchestrate the operating sytem configuration, tableau server installation and configuration.
 
 This code currently certified for following version:
 
-Tableau Server - 2020.3.3
+    Tableau Server - 2020.3.3
 
-Operating System - RHEL7.* and AWS Linux 2
+    Operating System - RHEL7.* and AWS Linux 2
 
 
 
@@ -23,7 +24,6 @@ After you have introduced your project, it is a good idea to add a **Table of co
 Here is a sample TOC(*wow! such cool!*) that is actually the TOC for this README.
 
 - [Project Title](#project-title)
-- [Demo-Preview](#demo-preview)
 - [Table of contents](#table-of-contents)
 - [Installation](#installation)
 - [Usage](#usage)
