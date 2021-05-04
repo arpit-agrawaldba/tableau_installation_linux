@@ -46,7 +46,7 @@ ansible-playbook <directory_repo_download>/tableau_installation_linux/tableau_bu
 
 For example when repository has been downloaded under directory /root/tableau, then execute
 
-ansible-playbook /root/tableau/tableau_installation_linux/tableau_build.yml
+    ansible-playbook /root/tableau/tableau_installation_linux/tableau_build.yml
 
 
 # Development
@@ -54,14 +54,14 @@ ansible-playbook /root/tableau/tableau_installation_linux/tableau_build.yml
 
 Anisble code consists of eight roles, eaching having it's own purpose
 
-1. tableau_os_build -    Configurate operating sytem for Tableau Server installation.
-2. tableau_install -     Install the Tableau Server rpm software.
-3. tableau_tsm_init -    TSM Initliazation. 
-4. tablea_activate -     Active the Tableau Server.
-5. tableau_register -    Register the Tableau Server.
-6. tableau_config_init - Configure the Identity Store and Initliaze.
-7. tableau_post_config - Post Installation setup. 
-8. tableau_monitoring -  Enable Monitoring.
+    1. tableau_os_build -    Configurate operating sytem for Tableau Server installation.
+    2. tableau_install -     Install the Tableau Server rpm software.
+    3. tableau_tsm_init -    TSM Initliazation. 
+    4. tablea_activate -     Active the Tableau Server.
+    5. tableau_register -    Register the Tableau Server.
+    6. tableau_config_init - Configure the Identity Store and Initliaze.
+    7. tableau_post_config - Post Installation setup. 
+    8. tableau_monitoring -  Enable Monitoring.
 
 # Contribute
 [(Back to top)](#table-of-contents)
@@ -90,4 +90,4 @@ No open bug fixes at the moment.
 
 <!-- Add the footer here -->
 
-![Footer](https://github.com/arpit-agrawaldba/tableau_installation_linux/blob/main/header.png)
+![Footer](https://github.com/arpit-agrawaldba/tableau_installation_linux/blob/main/footer.png)
