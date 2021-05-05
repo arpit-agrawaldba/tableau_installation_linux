@@ -39,6 +39,42 @@ To use this project, first clone the repo on your device using the command below
 
 ```git clone https://github.com/arpit-agrawaldba/tableau_installation_linux.git```
 
+# Prepare Code
+[(Back to top)](#table-of-contents)
+
+Before using the code you would need to place or modify the variable file under the location
+
+    <directory_repo_download>/tableau_installation_linux/vars/tab_var.yml
+
+Make sure at a minimum place or modify values of following mentioned variables and rest can be used default.
+
+The first variable "tableau_logical_vol_size_ingb" means the size of the tableau mount point where installation and data will be kept.
+The second variable "tableau_software_disk" means disk name on the EC2 instance to be used for installation and data for which we mentioned size and that also means this disk size used in the above variable should be equal or lesser thant this disk size.
+Third and Fourth "aws_access_key", "aws_secret_key" are your AWS bitbucket credentials where software is being kept for installation.
+The fifth variable "aws_bucket" is the bitbucket name where software has been copied.
+
+    "tableau_logical_vol_size_ingb": "100G"
+    "tableau_software_disk": "/dev/xvdf"
+    "aws_access_key": "KDLDODZH6BLCWQZ335YWFZ"
+    "aws_secret_key": "alkadfJJDLDV0ONEz5LDSRkNYQWFrTii0aI"
+    "aws_bucket": "bitbucket_tableau"
+
+Software needs to be uploaded on AWS Bitbucket before installation and its variable details are mentioned below. Download them from the tableau website and upload them to bitbucket.
+
+The first variable "tableau_software_rpm" is name of tableau server rpm for version 2020.3.3.
+The second, Third, and Fourth variables are driver software name for PostgreSQL, Oracle, and MSSQL servers respectively.
+Make sure all these software are present in your AWS bucket and details of these are mentioned in the variable file as per the variable discussed just before.
+
+
+    "tableau_software_rpm": "tableau-server-2020-3-3.x86_64.rpm"
+    "postgresql_driver_rpm": "tableau-postgresql-odbc-09.06.0500-1.x86_64.rpm"
+    "oracle_driver_rpm": "tableau-oracle-12.1.0.2.0-1.x86_64.rpm"
+    "mssql_driver_rpm": "msodbcsql17-17.5.1.1-1.x86_64.rpm"
+
+Once Vriable file has been prepared move to Next section to start the installation.
+
+## Kindly note for the production system review every variable and check if they need to be modified as per your needs.
+
 # Usage
 [(Back to top)](#table-of-contents)
 
