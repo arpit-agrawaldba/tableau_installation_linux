@@ -4,7 +4,7 @@
 "tableau_secondary_group": "tsmadmin"
 
 ## tableau primary and secondary group id. Make changes if you want separate ids.
-## tableau user id, it's home directory and shell. Make changes if you want to change it.
+## tableau user id, it's home directory and shell. Make changes if you want to change them.
  
 "tableau_primary_group_id": "10001"
 "tableau_secondary_group_id": "10002"
@@ -12,10 +12,10 @@
 "tableau_owner_homedir": "/opt/tableau"
 "tableau_owner_shell": "/bin/ksh"
 
-## tableau storage volume group name. Make changes if you want to use another name for volume group.
-## tableau software disk name to be replace with EBS volume create to hold tableau binaries and data. Make sure to change this.
-## tableau volume size and type of filesyste Make sure to change this as per recommendations in the chapter.
-## tableau installation diectory. Change this to another directory if needed.
+## tableau storage volume group name. Make changes if you want to use another name for the volume group.
+## tableau software disk name to be replaced with EBS volume create to hold tableau binaries and data. Make sure to change this.
+## tableau volume size and type of filesystem Make sure to change this as per recommendations in the chapter.
+## tableau installation directory. Change this to another directory if needed.
 
 "tableau_volume_group": "tableau_vg"
 "tableau_software_disk": "/dev/xvdf"
@@ -27,10 +27,10 @@
 ## Directory where temporary software will be downloaded from S3 bitbucket
 "tableau_software_dir": "/tmp"
 
-## Software name for installation, in this case it's Tableau server 2020.3.3 and to be stored in AWS S3 bitbuket
+## Software name for installation, in this case, it's Tableau server 2020.3.3 and to be stored in AWS S3 bitbucket
 "tableau_software_rpm": "tableau-server-2020-3-3.x86_64.rpm"
 
-## AWS Access key, secret key and bitbucket name where above tableau software has been stored. Place these values to succesfully installation.
+## AWS Access key, secret key, and bitbucket name where above tableau software has been stored. Place these values to a successful installation.
 "aws_access_key": ""
 "aws_secret_key": ""
 "aws_bucket": ""
@@ -41,7 +41,7 @@
 "tableau_temp_dir": "/tmp"
 
 
-## Modify all below parameters as per your details for Tableau Server registeration.
+## Modify all below parameters as per your details for Tableau Server registration.
 "zip": "12209"
 "country": "India"
 "city": "Gurugram"
@@ -56,7 +56,7 @@
 "first_name": "firstname"
 "email": "firstname@example.com"
 
-## Gateway and identitiy store. Use default make changes as per neededs.
+## Gateway and the identity store. Use default to make changes as per needs.
 "gateway_port": "80"
 "gateway_publichost": "localhost"
 "gateway_publicport": "80"
@@ -65,23 +65,23 @@
 
 "tsm_timeout": "3600"
 
-## Tableau Server local admin account, always reset the password once instllation is completed.
+## Tableau Server local admin account, always reset the password once the installation is completed.
 "tableau_admin_acct": "admin"
 "tableau_admin_acct_passwd": "Kasdfla98707"
 
-## Tableau Data Source Driver, place them in same S3 bucket created earlier.
+## Tableau Data Source Driver, place them in the same S3 bucket created earlier.
 "postgresql_driver_rpm": "tableau-postgresql-odbc-09.06.0500-1.x86_64.rpm"
 "oracle_driver_rpm": "tableau-oracle-12.1.0.2.0-1.x86_64.rpm"
 "mssql_driver_rpm": "msodbcsql17-17.5.1.1-1.x86_64.rpm"
 
-## Modify and place the smtp details are per organisation.
+## Modify and place the SMTP details are per organization.
 "smtp_server": "gateway@mail.com"
 "smtp_target_addresses": "targetemailaddress@example.com"
 "smtp_canonical_url": "http://tableauservername.domain"
 "smtp_enabled": "true"
 "smtp_from_address": "tablaeuservername@example.com"
 
-## Post setting and can be modified as per needed.
+## Post setting and can be modified as needed.
 "backgrounder_enabled": "true"
 "subscriptions_enabled": "true"
 "storage_email_enabled": "true"
