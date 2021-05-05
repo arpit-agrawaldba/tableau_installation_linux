@@ -22,6 +22,7 @@ This code currently certified for following version:
 - [Project Title](#project-title)
 - [Table of contents](#table-of-contents)
 - [Installation](#installation)
+- [Prepare Code](#Prepare-Code)
 - [Usage](#usage)
 - [Development](#development)
 - [Contribute](#contribute)
@@ -74,6 +75,32 @@ Make sure all these software are present in your AWS bucket and details of these
 Once Vriable file has been prepared move to Next section to start the installation.
 
 ## Kindly note for the production system review every variable and check if they need to be modified as per your needs.
+
+As the automation code is Anisble based one may also need to install it. Here are steps to install it
+
+Install python first, ignore if already present. It can also work on python 2.7.
+
+    yum install python36
+    
+Install EPEL  
+
+    (For RHEL7)
+    yum install wget
+    wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    rpm -ivh epel-release-latest-7.noarch.rpm
+    yum repolist
+
+    (For AWS Linux)
+    sudo amazon-linux-extras install epel
+    yum repolist
+
+Install Ansible
+
+    (For RHEL7)
+    yum --enablerepo=epel install ansible
+
+    (For AWS)
+    sudo amazon-linux-extras install ansible2
 
 # Usage
 [(Back to top)](#table-of-contents)
